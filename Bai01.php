@@ -15,7 +15,7 @@
                 </td>
             </tr>   
             <tr>
-                <td>Chiều dài</td>
+                <td>Chiều rộng</td>
                 <td>
                     <input type="input" name="chieurong"><br><br>
                 </td>
