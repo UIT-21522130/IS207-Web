@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var xmlHttp = false;
+        if(windown.XMLHttpRequest)
+        {
+            xmlHttp = new XMLHttpRequest();
+        }
+        function posstData ()
+        {
+            if (xmlHttp)
+            {
+                var obj = document.getElementById("kq");
+                var url = "BTTH5/loginBT.php";
+                var param = "name=" + txtuser.value + "&pass=" + txtpass.value;
+                xmlHttp.open("POST", url, true);
+                xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xmlHttp.send(param);
+                xmlHttp.onreadystatechange = function()
+                {
+                    if(xmlHttp.readyState == 4&& xmlHttp.status == 200)
+                    {
+                        obj.innerHTML = "<p>" + xmlHttp.responseText + "<p>";
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body> 
+    <form action="" method ="get">
+        <h1>Login</h1>
+        <h3>Username</h3>
+        <input type="text" class = "txt" id = "txtuser" placeholder = "Ten dang nhap">
+        <h3>Password</h3>
+        <input type="password" class = "txt" id = "txtpass" placeholder = "Mat khau"><br><br>
+        <input type="button" class = "button" id = "click" name = "Login" value= "Login" onclick = "postData()">
+    </form>
+    <div id = "kq"></div>
+
+</body>
+</html>
