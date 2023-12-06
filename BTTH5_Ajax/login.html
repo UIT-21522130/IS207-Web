@@ -6,16 +6,16 @@
     <title>Document</title>
     <script>
         var xmlHttp = false;
-        if(windown.XMLHttpRequest)
+        if(window.XMLHttpRequest)
         {
             xmlHttp = new XMLHttpRequest();
         }
-        function posstData ()
+        function postData ()
         {
             if (xmlHttp)
             {
                 var obj = document.getElementById("kq");
-                var url = "BTTH5/loginBT.php";
+                var url = "loginBT.php";
                 var param = "name=" + txtuser.value + "&pass=" + txtpass.value;
                 xmlHttp.open("POST", url, true);
                 xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
