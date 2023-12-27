@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 align= "center">Quản lý giỏ hàng</h1>
+    <div class="main__table">
+        <table>
+            <tr>
+                <td>Tên sản phẩm</td>
+                <td>Giá</td>
+                <td>Số lượng</td>
+                <td>Thành tiền</td>
+                <td>Action</td>
+            </tr>
+        </table>
+    </div>
+    <div class="total-money-product">Tổng tiền: <span></span></div>
+    <div>
+        <a href="cau2.php" class="back">Tiếp tục mua hàng</a>
+        <a href="cau6.html" class="payment">Thanh toán</a>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function()
+    {
+        $.get("cau5_call.php",
+              
+              function(data, status){
+                data = data.split("|");
+                $(".main__table table").after(data[0]);
+                $(".total-money-product span").html(data[1]);
+              })
+    })
+    $(document).on("change", ".product-qnt input", function () {
+        let productPrice = $(this).parents("tr").find(".product-price").html();
+        $(this)
+            .parents("tr")
+            .find(".product-total")
+            .html(productPrice * $(this).val());
+
+        var totalMoneyProducts = 0;
+        $(".product-total").each(function () {
+            totalMoneyProducts += Number($(this).text());
+        });
+
+        $(".total-money-product span").html(totalMoneyProducts);
+
+        $.get(`change_qnt.php?productId=${$(this).attr("masp")}&productQnt=${$(this).val()}`);
+    });
+
+    $(document).on("click", ".product-del button", function () {
+        $(this).parents("tr").remove();
+        let totalMoney = Number($(this).parents("tr").find(".product-total").text()),
+            totalMoneyProducts = Number($(".total-money-product span").html());
+
+        $(".total-money-product span").html(totalMoneyProducts - totalMoney);
+
+        $.get(`product_del.php?productId=${$(this).attr("masp")}`);
+    });
+</script>
+</html>
