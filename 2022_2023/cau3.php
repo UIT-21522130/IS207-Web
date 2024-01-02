@@ -71,7 +71,7 @@
                 $.post("add_room.php",
                                     {
                                         maphong : maphong,
-                                        ten : tenphong,
+                                        tena : tenphong,
                                         mahd: mahd
                                     }, function(data, status)
                                         {

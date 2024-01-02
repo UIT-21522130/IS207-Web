@@ -5,7 +5,7 @@
     include "connect.php";
     $mahd = $_POST['mahd'];
     $maphong = $_POST['maphong'];
-    $tenphong = $_POST['ten'];
+    $tenphong = $_POST['tena'];
 
     $sql1 = "UPDATE phong SET tinhtrang = 'full' WHERE maphong = '$maphong'";
     $connect->query($sql1);
@@ -43,15 +43,18 @@
                 $.post("remove_room.php",
                                       {
                                         maphong : maphong,
-                                        ten : tenphong,
+                                        // ten : tenphong,
                                         mahd: mahd
                                       }, function(data, status)
                                         {
                                             if (status == "success")
+                                            {
                                             if ($('#empty td.maphong:contains(' + maphong + ')').length === 0) {
-                                                    $('#empty').append(data);
+                                            // if(data=="success") {   
+                                                $('#empty').append(data);
                                                     row.remove();
                                                 } 
+                                            }
                                                 
                                         });
             });
