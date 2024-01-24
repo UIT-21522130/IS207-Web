@@ -20,8 +20,7 @@
                 }
         ?>
     </select>
-    <h2>Danh sách các phòng còn trống</h2>
-        
+    <h2>Danh sách các phòng còn trống</h2>        
     <table border="1" id="empty">
     <tr>
         <th>STT</th>
@@ -29,23 +28,7 @@
         <th>Tên phòng</th>
         <th>Chức năng</th>
     </tr>        
-    <?php
-        include "connect.php";
-        $sql = "SELECT * from phong where tinhtrang = 'trong' ";
-        $result = $connect->query($sql);
-        if ($result->num_rows > 0) {
-            $i = 1;
-            while ($row = $result->fetch_assoc()) {
-                echo '<tr>';
-                echo '<td>'.$i.'</td>';
-                echo '<td class="maphong">'.$row['maphong'].'</td>';
-                echo '<td class="ten">'.$row['tenphong'].'</td>';
-                echo '<td><input type="button" class="them" value="Thêm"></td>';
-                echo '</tr>';
-                $i++;
-            }
-        }
-    ?>
+    
 </table>
 <h2>Danh sách các phòng đã thêm</h2>
 <table border="1" id="added">
@@ -59,20 +42,47 @@
 <script>
     $(document).ready(function()
     {
+        $(document).on("change", ".hoadon", function() 
+            {
+                var mahd = $('.hoadon').val()
+                $("#empty tr:not(:first-child)").remove();
+                $("#added tr:not(:first-child)").remove();
+                $.post("3_hd_change.php",
+                                    {
+                                        mahd: mahd
+                                    }, 
+                                    function(data, status)
+                                        {
+                                            if (status == "success")
+                                            {
+                                                $("#empty").append(data)
+                                            }
+                                        });
+                $.post("3_hd_them.php", 
+                                    {
+                                        mahd: mahd
+                                    }, 
+                                    function(data, status)
+                                        {
+                                            if (status == "success")
+                                            {
+                                                $("#added").append(data)
+                                            }
+                                        });
+            });
+        
+        });
         $(document).on("click", ".them", function() 
             {
-                const button = $(this); // Lưu tham chiếu của nút "Thêm"
-                const maphong = $(this).closest("tr").find(".maphong").text();
-                const tenphong = $(this).closest("tr").find(".ten").text();
-                const mahd = $(".hoadon").val();
-                // Lưu tham chiếu của dòng để xóa sau khi gửi yêu cầu AJAX
-                var row = button.closest("tr");
+                var button = $(this); 
+                var mahd = $(".hoadon").val();
+                var maphong = $(this).closest('tr').find('td:eq(1)').text();
+                var row = $(this).closest("tr");
 
-                $.post("add_room.php",
+                $.post("3_add_room.php",
                                     {
-                                        maphong : maphong,
-                                        tena : tenphong,
-                                        mahd: mahd
+                                        mahd: mahd,
+                                        maphong: maphong
                                     }, function(data, status)
                                         {
                                             if (status == "success")
@@ -84,7 +94,6 @@
                                                 
                                         });
             });
-        });
 
 </script>
 </body>

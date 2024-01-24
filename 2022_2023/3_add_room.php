@@ -1,5 +1,5 @@
 
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <?php
     include "connect.php";
@@ -25,7 +25,7 @@
             echo '</tr>';
             $i++;
         }
-}
+    }   
    $connect->close(); 
 ?>
 <script>
